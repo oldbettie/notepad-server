@@ -1,31 +1,24 @@
 const express = require("express");
-const cors = require("cors");
 const mysql = require("mysql2");
+const cors = require("cors");
+const db = require("./models");
+const routes = require("./routes/routes");
 
-const routes = require("./routes/routes.js");
-
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(cors());
+//middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(cors());
 
 routes(app);
 
-// test post works maybe?
-app.post("/notes", (req, res) => {
-	const inData = [2, 2, "test", "2022-05-21 03:14:00", 1200, 1200]; //normally req.body
-	query.postNote(inData).then((notes) => {
-		console.log("in database");
-	});
-});
-
-app.listen(PORT);
+//load routes
+app.use(routes);
 
 app.use((req, res) => {
-	res.status(404).send({ url: `${req.originalUrl} not found` });
+	res.status(404).send({ url: `${req.originalURL} not found` });
 });
 
 console.log(`server running on http://localhost:${PORT}`);

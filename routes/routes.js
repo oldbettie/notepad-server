@@ -1,21 +1,55 @@
-const requests = require("../controllers/notesController.js");
+const express = require("express");
+const { route } = require("express/lib/application");
+const { get } = require("express/lib/response");
+const router = express.Router();
+const users = require("../controllers/usersController");
+const subjects = require("../controllers/subjectsController");
+const notes = require("../controllers/notesController");
 
-module.exports = (app) => {
-	app.route("/").get();
+//Landing page
+router.get("/", (req, res) => {
+	res.send("landing page");
+});
 
-	// session???
-	app.route("/login").get().post().delete();
+//users
 
-	app.route("/signup").get().post();
+// login
+router
+	.route("/users/new")
+	.get(users.getNewUser)
+	.post(users.postNewUser)
+	.delete();
 
-	app.route("/users/:id").get().put().delete();
+// sign up
+router
+	.route("/users/:id")
+	.get(users.getUser)
+	.put(users.putUser)
+	.delete(users.deleteUser);
 
-	app.route("/subjects").get();
+//subject routes
 
-	app.route("/subjects/:id").get().post().put().delete();
+router.get("/subjects", subjects.getAllSubjects);
 
-	// generated within subjects.
-	app.route("/notes").get(requests.getAllNotes).put().delete();
+router
+	.route("/subjects/new")
+	.get(subjects.getNewSubject)
+	.post(subjects.postNewSubject);
 
-	app.route("/notes/:id").get().post().put().delete();
-};
+router
+	.route("/subjects/:id")
+	.get(subjects.getSubject)
+	.put(subjects.putSubject)
+	.delete(subjects.deleteSubject);
+
+//notes routes
+
+router.route("/notes/new").get(notes.getNewNote).post(notes.postNewNote);
+
+router
+	.route("/notes/:id")
+	.get(notes.getNote)
+	.put(notes.putNote)
+	.delete(notes.deleteNote);
+
+module.exports = router;
