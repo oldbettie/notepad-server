@@ -12,8 +12,10 @@
     "axios": "^0.27.2",
     "cors": "^2.8.5",
     "express": "^4.18.1",
+    "fs": "^0.0.1-security",
     "mysql2": "^2.3.3",
-    "nodemon": "^2.0.16"
+    "path": "^0.12.7",
+    "sequelize": "^6.19.2"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,9 @@
     "url": "https://github.com/oldbettie/notepad-server/issues"
   },
   "homepage": "https://github.com/oldbettie/notepad-server#readme",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.16",
+    "sequelize-cli": "^6.4.1"
+  }
 }
