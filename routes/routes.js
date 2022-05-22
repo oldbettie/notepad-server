@@ -2,90 +2,56 @@ const express = require('express');
 const { route } = require('express/lib/application');
 const { get } = require('express/lib/response');
 const router = express.Router();
+const users = require('../controllers/usersController');
+const subjects = require('../controllers/subjectsController');
+const notes = require('../controllers/notesController');
+
 
 //Landing page
 router.get('/', (req, res) => {
     res.send('landing page');
 });
 
-// //////////////////
+
 //users
+
 router
     .route('/users/new')
-    .get((req, res) => {
-        res.send('user form')
-    })
-    .post((req, res) => {
-        res.send('post form')
-        //redirect to user profile
-    });
+    .get(users.getNewUser)
+    .post(users.postNewUser);
 
 router
     .route("/users/:id")
-    .get((req, res) => {
-        res.send(`get user with id`);
-    })
-    .put((req, res) => {
-        res.send(`update user. populated user form`);
-    })
-    .delete((req, res) => {
-        res.send(`delete user with id`);
-        //redirect to landing?;
-    });
+    .get(users.getUser)
+    .put(users.putUser)
+    .delete(users.deleteUser);
 
-// //////////////subject routes //////////////
+//subject routes
 
-router.get("/subjects", (req, res) => {
-    res.send('not sure if needed. see all subjects for user_id=x? for admin?');
-});
+router.get("/subjects", subjects.getAllSubjects);
 
 router
     .route("/subjects/new")
-    .get((req, res) => {
-        res.send('create new subject');
-        //inside user main
-    })
-    .post((req, res) => {
-        res.send('post new subject');
-        //no redirect
-    })
+    .get(subjects.getNewSubject)
+    .post(subjects.postNewSubject);
 
 router
     .route("/subjects/:id")
-    .get((req, res) => {
-        res.send(`get subject with id//show notes`);
-    })
-    .put((req, res) => {
-        res.send(`update subject. populated subject form`);
-    })
-    .delete((req, res) => {
-        res.send(`delete subject with id`);
-        //redirect to user profile?;
-    });
+    .get(subjects.getSubject)
+    .put(subjects.putSubject)
+    .delete(subjects.deleteSubject);
 
 
-/////////////////notes routes /////////////
+//notes routes
 
 router
     .route("/notes/new")
-    .get((req, res) => {
-    res.send('create new note')
-    })
-    .post((req, res) => {
-        res.send('post new note');
-        //no redirect
-    })
+    .get(notes.getNewNote)
+    .post(notes.postNewNote);
 router  
     .route("/notes/:id")
-    .get((req, res) => {
-        res.send(`get note with id`);
-    })
-    .put((req, res) => {
-        res.send(`update note. edit note form`);
-    })
-    .delete((req, res) => {
-        res.send(`delete subject with id`);
-        // no redirect;
-    });
+    .get(notes.getNote)
+    .put(notes.putNote)
+    .delete(notes.deleteNote);
 
 module.exports = router
