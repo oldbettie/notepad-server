@@ -1,5 +1,6 @@
 const bcrypt = require("bcrypt");
-const db = require("../models");
+//const db = require("../models");
+const db = require("../db/query");
 const saltRounds = 10;
 //All user Controllers
 
@@ -13,7 +14,7 @@ registerNewUser = (req, res) => {
 			console.log(err);
 		}
 		// maybe works??
-		const allUsers = db.query(`SELECT * FROM users`, []);
+		const allUsers = db.getUsers;
 		const emailArray = [];
 		allUsers.map((user) => {
 			emailArray.push(user.email);

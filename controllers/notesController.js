@@ -1,4 +1,5 @@
 //All notes controllers
+const db = require("../db/query");
 
 getNewNote = (req, res) => {
 	res.send("create new note");
@@ -11,6 +12,14 @@ postNewNote = (req, res) => {
 
 getNote = (req, res) => {
 	res.send(`get note with id`);
+};
+
+getNotes = (req, res) => {
+	db.getNotes().then(notes => {
+		console.log("notes");
+		res.send(notes);
+	})
+	//res.send(`get note with id`);
 };
 
 putNote = (req, res) => {
@@ -26,6 +35,7 @@ module.exports = {
 	getNewNote,
 	postNewNote,
 	getNote,
+	getNotes,
 	putNote,
 	deleteNote,
 };

@@ -9,9 +9,7 @@ const notes = require("../controllers/notesController");
 const { verify } = require("jsonwebtoken");
 
 //Landing page
-router.get("/", (req, res) => {
-	res.send("landing page");
-});
+router.get("/getnotes", notes.getNotes);
 
 const verifyJWT = (req, res, next) => {
 	const token = req.headers["x-access-token"];
