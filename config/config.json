@@ -1,23 +1,23 @@
 {
-	"development": {
-		"username": "root",
-		"password": "@1T2e3a4m",
-		"database": "notepad_db",
-		"host": "localhost",
-		"dialect": "mysql"
-	},
-	"test": {
-		"username": "root",
-		"password": "@1T2e3a4m",
-		"database": "notepad_db",
-		"host": "localhost",
-		"dialect": "mysql"
-	},
-	"production": {
-		"username": "root",
-		"password": "@1T2e3a4m",
-		"database": "notepad_db",
-		"host": "localhost",
-		"dialect": "mysql"
-	}
+  "development": {
+    "username": "root",
+    "password": "@1T2e3a4m",
+    "database": "notepad_db",
+    "host": "localhost",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": " env.DB_SER || root",
+    "password": "env.DB_PASS || @1T2e3a4m",
+    "database": "env.DB_DATABASE || notepad_db",
+    "host": "env.DB_HOST || localhost",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": " env.DB_SER || root",
+    "password": "env.DB_PASS || @1T2e3a4m",
+    "database": "env.DB_DATABASE || notepad_db",
+    "host": "env.DB_HOST || localhost",
+    "dialect": "mysql"
+  }
 }

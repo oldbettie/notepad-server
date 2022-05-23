@@ -7,9 +7,7 @@ const notes = require("../controllers/notesController");
 const { verify } = require("jsonwebtoken");
 
 //Landing page
-router.get("/", (req, res) => {
-	res.send("landing page");
-});
+router.get("/getnotes", notes.getNotes);
 
 // not sure where this function needs to be
 const verifyJWT = (req, res, next) => {

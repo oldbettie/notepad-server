@@ -39,10 +39,13 @@ app.use(
 //load routes
 app.use(routes);
 
+app.get("/", (req, res) => {
+	res.send("Hello World");
+});
+
 app.use((req, res) => {
-	res.status(404).send({ url: `${req.originalURL} not found` });
+	res.status(404).send({ url: `${req.originalURL} not found!` });
 });
 
 app.listen(PORT);
-
 console.log(`server running on http://localhost:${PORT}`);
