@@ -1,19 +1,21 @@
 const bcrypt = require("bcrypt");
-const db = require("../models");
+const db = require("../models/indexs3");
 const jwt = require("jsonwebtoken");
 
-//All user Controllers
-
 // login user
-createSession = (req, res) => {
+createSession = async (req, res) => {
 	const email = req.body.email;
 	const password = req.body.password;
+
+	// sequelise ---
+	// const result = await User.findAll({where: {email: email}})
 
 	db.query(`SELECT * FROM users WHERE email = ?;`, email, (err, result) => {
 		if (err) {
 			res.send({ error: err });
 		}
-		if (res.length > 0) {
+		// ---
+		if (result.length > 0) {
 			bcrypt.compare(password, result[0].password, (error, response) => {
 				if (response) {
 					const id = result[0].id;
@@ -37,7 +39,7 @@ createSession = (req, res) => {
 		} else {
 			res.send({ message: "email doesnt exist" });
 		}
-	});
+	}); // ---
 	//redirect to home
 };
 

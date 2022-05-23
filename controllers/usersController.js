@@ -1,13 +1,17 @@
 const bcrypt = require("bcrypt");
-const database = require("../db/connection");
 const saltRounds = 10;
+const { db } = require("../models");
+const User = db.models.User;
+
 //All user Controllers
 
 registerNewUser = async (req, res) => {
 	const userName = req.body.userName;
 	const email = req.body.email;
 	const password = req.body.password;
-	const allUsers = await database.query(`SELECT * FROM Users`, []);
+	console.log(email);
+	// sequeliser ----
+	const allUsers = await User.findAll();
 	const emailArray = [];
 	if (allUsers.length > 0) {
 		allUsers.map((user) => {
@@ -18,15 +22,18 @@ registerNewUser = async (req, res) => {
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
 			console.log(err);
+			return res.send(err);
 		}
 		if (emailArray.includes(email)) {
-			return "email already exists";
+			return res.send("email already exists");
 		} else {
 			try {
-				const result = await database.query(
-					`INSERT INTO users (userName, email, password) VALUES (?,?,?)`,
-					[userName, email, hash]
-				);
+				// for sequealizer ---
+				const result = await User.create({
+					userName: userName,
+					email: email,
+					password: hash,
+				});
 				res.json(result);
 				console.log(result);
 			} catch (err) {
@@ -39,9 +46,10 @@ registerNewUser = async (req, res) => {
 
 getUser = async (req, res) => {
 	try {
-		const data = await database.query(`SELECT * FROM users WHERE id = ?`, [
-			req.params.id,
-		]);
+		// for sequaliser ----
+		const data = await User.findAll({
+			where: { id: req.params.id },
+		});
 
 		if (!data) {
 			console.log(data);
