@@ -14,7 +14,7 @@ registerNewUser = async (req, res) => {
 			emailArray.push(user.email);
 		});
 	}
-
+	// added working controller
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
 			console.log(err);
