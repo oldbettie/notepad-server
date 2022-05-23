@@ -20,24 +20,6 @@ async function postNote(inData) {
 	}
 }
 
-// async function getUsers() {
-// 	try {
-// 		const result = await db.query(`SELECT * FROM Users`, []);
-// 		return result;
-// 	} catch (err) {
-// 		console.error(err);
-// 	}
-// }
-// async function getUser(id) {
-// 	try {
-// 		const data = await db.query(`SELECT * FROM users WHERE id = ?`, [id]);
-// 		return data;
-// 	} catch (err) {
-// 		console.log(err);
-// 		return err;
-// 	}
-// }
-
 module.exports = {
 	getNotes,
 	postNote,
