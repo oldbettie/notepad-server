@@ -22,18 +22,16 @@ registerNewUser = async (req, res) => {
 		if (emailArray.includes(email)) {
 			return "email already exists";
 		} else {
-			await database.query(
-				`INSERT INTO users (userName, email, password) VALUES (?,?,?)`,
-				[userName, email, hash],
-				(err, result) => {
-					if (err) {
-						console.log(err);
-					} else {
-						console.log(result);
-						res.send(result);
-					}
-				}
-			);
+			try {
+				const result = await database.query(
+					`INSERT INTO users (userName, email, password) VALUES (?,?,?)`,
+					[userName, email, hash]
+				);
+				res.json(result);
+				console.log(result);
+			} catch (err) {
+				console.log(err);
+			}
 		}
 	});
 	//redirect to user profile ------
