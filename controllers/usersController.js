@@ -1,10 +1,11 @@
 const bcrypt = require("bcrypt");
-const db = require("../models");
+// const { db } = require("../models");
+const db = require("../db/connection");
 const saltRounds = 10;
 //All user Controllers
 
 registerNewUser = (req, res) => {
-	const username = req.body.username;
+	const userName = req.body.userName;
 	const email = req.body.email;
 	const password = req.body.password;
 
@@ -15,15 +16,17 @@ registerNewUser = (req, res) => {
 		// maybe works??
 		const allUsers = db.query(`SELECT * FROM users`, []);
 		const emailArray = [];
-		allUsers.map((user) => {
-			emailArray.push(user.email);
-		});
+		if (allUsers.length > 0) {
+			allUsers.map((user) => {
+				emailArray.push(user.email);
+			});
+		}
 		if (emailArray.includes(email)) {
 			return "email already exists";
 		} else {
 			db.query(
-				`INSERT INTO users (username, email, password) VALUES (?,?)`,
-				[username, email, hash],
+				`INSERT INTO users (userName, email, password) VALUES (?,?)`,
+				[userName, email, hash],
 				(err, result) => {
 					if (err) {
 						console.log(err);

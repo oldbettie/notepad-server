@@ -1,6 +1,4 @@
 const express = require("express");
-const { route } = require("express/lib/application");
-const { get } = require("express/lib/response");
 const router = express.Router();
 const users = require("../controllers/usersController");
 const sessions = require("../controllers/sessionController");
@@ -13,6 +11,7 @@ router.get("/", (req, res) => {
 	res.send("landing page");
 });
 
+// not sure where this function needs to be
 const verifyJWT = (req, res, next) => {
 	const token = req.headers["x-access-token"];
 	if (!token) {
@@ -35,10 +34,8 @@ router.route("/isAuth").get(sessions.checkSessionStatus, verifyJWT);
 router.route("/login").post(sessions.createSession).get(sessions.getUser);
 
 // signup/userprofile
-router
-	.route("/users/new")
-	// .get(users.getNewUser) // this would be only required on frntend
-	.post(users.registerNewUser);
+router.route("/signup").post(users.registerNewUser);
+
 router
 	.route("/users/:id")
 	.get(users.getUser)

@@ -17,7 +17,7 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use(
 	cors({
-		origin: [`http://localhost:${PORT}`],
+		origin: [`http://localhost:3001`],
 		methods: ["GET", "POST", "PUT", "DELETE"],
 		credentials: true,
 	})
@@ -42,5 +42,7 @@ app.use(routes);
 app.use((req, res) => {
 	res.status(404).send({ url: `${req.originalURL} not found` });
 });
+
+app.listen(PORT);
 
 console.log(`server running on http://localhost:${PORT}`);
