@@ -1,7 +1,6 @@
 const express = require("express");
-const mysql = require("mysql2");
 const cors = require("cors");
-const db = require("./models");
+const { db } = require("./models");
 const routes = require("./routes/routes");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
@@ -35,6 +34,10 @@ app.use(
 		},
 	})
 );
+// auto invoked callback function..
+(async () => {
+	await db.sequelize.sync();
+})();
 
 //load routes
 app.use(routes);
