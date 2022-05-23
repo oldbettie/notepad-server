@@ -3,16 +3,38 @@ const mysql = require("mysql2");
 const cors = require("cors");
 const db = require("./models");
 const routes = require("./routes/routes");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const dotenv = require("dotenv").config();
 
-const port = process.env.PORT || 3000;
+// check for caps after git pull
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 //middleware
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(
+	cors({
+		origin: [`http://localhost:${PORT}`],
+		methods: ["GET", "POST", "PUT", "DELETE"],
+		credentials: true,
+	})
+);
 
-routes(app);
+// need to update these settings before it will work
+app.use(
+	session({
+		key: "userId",
+		secret: process.env.SESSION_SECRET,
+		resave: false,
+		saveUninitialized: false,
+		cookie: {
+			expires: 60 * 60 * 24,
+		},
+	})
+);
 
 //load routes
 app.use(routes);
