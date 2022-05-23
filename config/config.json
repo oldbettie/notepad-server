@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
   "development": {
     "username": "root",
     "password": "@1T2e3a4m",
@@ -20,4 +21,27 @@
     "host": "env.DB_HOST || localhost",
     "dialect": "mysql"
   }
+=======
+	"development": {
+		"username": "root",
+		"password": "@1T2e3a4m",
+		"database": "notepad_db",
+		"host": "localhost",
+		"dialect": "mysql"
+	},
+	"test": {
+		"username": "root",
+		"password": "@1T2e3a4m",
+		"database": "notepad_db",
+		"host": "localhost",
+		"dialect": "mysql"
+	},
+	"production": {
+		"username": "root",
+		"password": "@1T2e3a4m",
+		"database": "notepad_db",
+		"host": "localhost",
+		"dialect": "mysql"
+	}
+>>>>>>> 10340d57cb1102419c225051d3aaeaad5259f947
 }
