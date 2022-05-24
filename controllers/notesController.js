@@ -5,6 +5,7 @@ const Note = db.models.Note;
 
 postNewNote = (req, res) => {
 	//get location from front-end
+	//requires elem.getBoundingClient() result from client to change location
 	//const userId = 1; //get session user id
 	//const { note_text, x_axis, y_axis, subjectId } = req.body
 	console.log(req.body)
