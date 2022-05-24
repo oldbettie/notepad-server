@@ -4,6 +4,17 @@ getAllSubjects = (req, res) => {
     res.send('not sure if needed. see all subjects for user_id=x? for admin?');
 }
 
+getAllSubject = (req, res) => {
+	try {
+		Subjects.findAll()
+		.then(subjects => {
+			res.status(200).json(subjects);
+		})
+	} catch (err) {
+		res.send({ error: err });
+	}
+};
+
 getNewSubject = (req, res) => {
     res.send('create new subject');
     //inside user main
