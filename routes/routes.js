@@ -10,7 +10,7 @@ router.get("/getnotes", notes.getNotes);
 
 // not sure where this function needs to be
 
-router.route("/isAuth").get(sessions.checkSessionStatus);
+router.route("/isAuth").get(sessions.checkSessionStatus).post(sessions.getUser);
 
 //users
 router.route("/login").post(sessions.createSession).get(sessions.getUser);

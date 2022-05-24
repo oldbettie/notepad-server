@@ -46,21 +46,22 @@ checkSessionStatus = (req, res) => {
 	Auth(req, res);
 };
 
-// just for getting the login status
-getUser = (req, res) => {
-	if (req.session.user) {
-		res.send({ loggedIn: true, user: req.session.user });
-	} else {
-		res.send({ loggedIn: false });
+// session authentication this runs on every new render
+getUser = async (req, res) => {
+	const id = req.body.id;
+	if (Auth(req).auth) {
+		const result = await User.findAll({ where: { id: id } });
+
+		res.json({
+			...Auth(req),
+			email: result[0].email,
+			userName: result[0].userName,
+			id: result[0].id,
+		});
 	}
 };
 
-deleteUser = (req, res) => {
-	if (Auth(req, res)) {
-	}
-	res.send(`delete user with id`);
-	//redirect to landing?;
-};
+deleteUser = (req, res) => {};
 
 module.exports = {
 	registerNewUser,
