@@ -36,6 +36,7 @@ note.belongsTo(subject);
 user.hasMany(note);
 note.belongsTo(user);
 
+
 module.exports = {
 	db,
 };
