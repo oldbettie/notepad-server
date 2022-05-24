@@ -15,10 +15,10 @@ getNote = (req, res) => {
 };
 
 getNotes = (req, res) => {
-	db.getNotes().then(notes => {
+	db.getNotes().then((notes) => {
 		console.log("notes");
 		res.send(notes);
-	})
+	});
 	//res.send(`get note with id`);
 };
 

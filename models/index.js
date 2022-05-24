@@ -19,8 +19,19 @@ db.models.User = require("./user")(sequelize, Sequelize.DataTypes);
 db.models.Note = require("./note")(sequelize, Sequelize.DataTypes);
 db.models.Subject = require("./subject")(sequelize, Sequelize.DataTypes);
 
-db.models.User.belongsToMany(db.models.Note, { through: db.models.Subject });
-db.models.Note.belongsTo(db.models.User, { through: db.models.Subject });
+const user = db.models.User;
+const note = db.models.Note;
+const subject = db.models.Subject;
+
+// maybe works to be tested
+user.hasMany(subject, {
+	constraints: false,
+});
+subject.belongsToMany(user, { through: note });
+subject.hasMany(note);
+note.belongsTo(subject);
+user.hasMany(note);
+note.belongsTo(user);
 
 module.exports = {
 	db,
