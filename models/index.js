@@ -16,6 +16,11 @@ const db = {};
 db.sequelize = sequelize;
 db.models = {};
 db.models.User = require("./user")(sequelize, Sequelize.DataTypes);
+db.models.Note = require("./note")(sequelize, Sequelize.DataTypes);
+db.models.Subject = require("./subject")(sequelize, Sequelize.DataTypes);
+
+db.models.User.belongsToMany(db.models.Note, { through: db.models.Subject });
+db.models.Note.belongsTo(db.models.User, { through: db.models.Subject });
 
 module.exports = {
 	db,
