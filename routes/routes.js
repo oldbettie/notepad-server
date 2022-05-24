@@ -5,8 +5,6 @@ const sessions = require("../controllers/sessionController");
 const subjects = require("../controllers/subjectsController");
 const notes = require("../controllers/notesController");
 
-//Landing page
-router.get("/getnotes", notes.getNotes);
 
 // not sure where this function needs to be
 
@@ -41,7 +39,11 @@ router
 
 //notes routes
 
-router.route("/notes/new").get(notes.getNewNote).post(notes.postNewNote);
+router.get("/notes", notes.getNotes);
+
+router
+	.route("/notes/new")
+	.post(notes.postNewNote);
 
 router
 	.route("/notes/:id")

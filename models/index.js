@@ -20,16 +20,19 @@ db.models.Note = require("./note")(sequelize, Sequelize.DataTypes);
 db.models.Subject = require("./subject")(sequelize, Sequelize.DataTypes);
 
 const user = db.models.User;
-const note = db.models.Note;
+const note  = db.models.Note;
 const subject = db.models.Subject;
 
-// maybe works to be tested
 user.hasMany(subject, {
-	constraints: false,
+	constraints: false
 });
 subject.belongsToMany(user, { through: note });
+
+// REMEMBER POSSIBLE ERROR!!!!!!!!!!!!!
+//subject.hasMany(user);
 subject.hasMany(note);
 note.belongsTo(subject);
+
 user.hasMany(note);
 note.belongsTo(user);
 
