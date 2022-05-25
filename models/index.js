@@ -23,19 +23,31 @@ const user = db.models.User;
 const note  = db.models.Note;
 const subject = db.models.Subject;
 
-user.hasMany(subject, {
-	constraints: false
-});
-subject.belongsToMany(user, { through: note });
+// user.hasMany(subject, {
+// 	constraints: false
+// });
+// subject.belongsToMany(user, { through: note });
 
-// REMEMBER POSSIBLE ERROR!!!!!!!!!!!!!
-//subject.hasMany(user);
+// // REMEMBER POSSIBLE ERROR!!!!!!!!!!!!!
+// //subject.hasMany(user);
+// subject.hasMany(note);
+// note.belongsTo(subject);
+
+// user.hasMany(note);
+// note.belongsTo(user);
+
+// Associations
+user.belongsToMany(subject, { through: 'SubjectUser' });
+subject.belongsToMany(user, { through: 'SubjectUser' });
+
+user.hasMany(subject, { foreignKey: 'ownerId'});
+subject.belongsTo(user, { foreignKey: 'ownerId'});
+
 subject.hasMany(note);
 note.belongsTo(subject);
 
 user.hasMany(note);
 note.belongsTo(user);
-
 
 module.exports = {
 	db,
