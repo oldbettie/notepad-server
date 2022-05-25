@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 const { db } = require("../models");
 const User = db.models.User;
+const Auth = require("./auth");
 
 //All user Controllers
 
@@ -74,19 +75,23 @@ getUser = async (req, res) => {
 
 putUser = (req, res) => {
 	const data = req.body;
-	try {
-		User.update(
-			{
-				firstName: data.firstName,
-				lastName: data.lastName,
-				userName: data.userName,
-			},
-			{ where: { id: data.id } }
-		).then(() => {
-			res.status(200).json({ message: "note updated" });
-		});
-	} catch (err) {
-		res.send({ error });
+	if (Auth(req).auth) {
+		try {
+			User.update(
+				{
+					firstName: data.firstName,
+					lastName: data.lastName,
+					userName: data.userName,
+				},
+				{ where: { id: data.id } }
+			).then(() => {
+				res.status(200).json({ message: "user updated" });
+			});
+		} catch (err) {
+			res.send({ error });
+		}
+	} else {
+		res.send(Auth(req));
 	}
 };
 

@@ -4,6 +4,7 @@ const { db } = require("../models");
 const Note = db.models.Note;
 
 postNewNote = (req, res) => {
+	// if(Auth(req).auth)
 	//get location from front-end
 	//requires elem.getBoundingClient() result from client to change location
 	const userId = 1; //get session user id
