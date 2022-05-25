@@ -49,6 +49,8 @@ getUser = async (req, res) => {
 			email: result[0].email,
 			userName: result[0].userName,
 			id: result[0].id,
+			firstName: result[0].firstName,
+			lastName: result[0].lastName,
 		});
 	}
 };
