@@ -36,14 +36,6 @@ createSession = async (req, res) => {
 	} else {
 		res.json({ auth: false, message: "email doesnt exist" });
 	}
-	// }); // ---
-	//redirect to home
-};
-
-// Auth returns true or false and the response info if needed -- this is a test function
-checkSessionStatus = (req, res) => {
-	console.log(Auth(req, res));
-	Auth(req, res);
 };
 
 // session authentication this runs on every new render
@@ -61,13 +53,7 @@ getUser = async (req, res) => {
 	}
 };
 
-deleteUser = (req, res) => {};
-
 module.exports = {
-	registerNewUser,
 	getUser,
-	putUser,
-	deleteUser,
 	createSession,
-	checkSessionStatus,
 };

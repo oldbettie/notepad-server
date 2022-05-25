@@ -5,13 +5,12 @@ const sessions = require("../controllers/sessionController");
 const subjects = require("../controllers/subjectsController");
 const notes = require("../controllers/notesController");
 
-
 // not sure where this function needs to be
 
-router.route("/isAuth").get(sessions.checkSessionStatus).post(sessions.getUser);
+router.route("/isAuth").post(sessions.getUser);
 
 //users
-router.route("/login").post(sessions.createSession).get(sessions.getUser);
+router.route("/login").post(sessions.createSession);
 
 // signup/userprofile
 router.route("/signup").post(users.registerNewUser);
@@ -41,9 +40,7 @@ router
 
 router.get("/notes", notes.getNotes);
 
-router
-	.route("/notes/new")
-	.post(notes.postNewNote);
+router.route("/notes/new").post(notes.postNewNote);
 
 router
 	.route("/notes/:id")

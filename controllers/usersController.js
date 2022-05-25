@@ -22,10 +22,10 @@ registerNewUser = async (req, res) => {
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
 			console.log(err);
-			return res.send(err);
+			return res.json({ message: err, state: false });
 		}
 		if (emailArray.includes(email)) {
-			return res.send("email already exists");
+			return res.json({ message: "email already exists", state: false });
 		} else {
 			try {
 				// for sequealizer ---
@@ -34,9 +34,15 @@ registerNewUser = async (req, res) => {
 					email: email,
 					password: hash,
 				});
-				res.json(result);
+				res.json({
+					userName: userName,
+					email: email,
+					message: "sucess",
+					state: true,
+				});
 				console.log(result);
 			} catch (err) {
+				res.json({ message: err, state: false });
 				console.log(err);
 			}
 		}
