@@ -5,7 +5,6 @@ const routes = require("./routes/routes");
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const dotenv = require("dotenv").config();
-var bodyParser = require("body-parser");
 
 // check for caps after git pull
 const PORT = process.env.PORT || 3000;
@@ -15,8 +14,6 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
-//app.use(bodyParser.urlencoded({ extended: false }))
-//app.use(bodyParser.json())
 
 app.use(
 	cors({
