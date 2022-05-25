@@ -46,8 +46,8 @@ subject.belongsTo(user, { foreignKey: 'ownerId'});
 subject.hasMany(note);
 note.belongsTo(subject);
 
-user.hasMany(note);
-note.belongsTo(user);
+user.hasMany(note, {constraints: false });
+note.belongsTo(user, {constraints: false });
 
 module.exports = {
 	db,

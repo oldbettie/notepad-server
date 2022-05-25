@@ -23,29 +23,29 @@ router
 
 //subject routes
 
-router.get("/subjects", subjects.getAllSubjects);
+//route should be part of users/:?/subjects  ?
+router.get("/subjects", subjects.getAllSubjectsForUser);	//tested
 
 router
 	.route("/subjects/new")
-	.get(subjects.getNewSubject)
-	.post(subjects.postNewSubject);
+	.post(subjects.postNewSubject);							//tested
 
 router
 	.route("/subjects/:id")
-	.get(subjects.getSubject)
-	.put(subjects.putSubject)
-	.delete(subjects.deleteSubject);
+	.get(subjects.getSubject)								//tested. needs participants added
+	.put(subjects.putSubject)								//for later
+	.delete(subjects.deleteSubject);						// tested
 
 //notes routes
 
-router.get("/notes", notes.getNotes);
+router.get("/notes", notes.getNotes);					//tested
 
-router.route("/notes/new").post(notes.postNewNote);
+router.route("/notes/new").post(notes.postNewNote);		//tested
 
 router
 	.route("/notes/:id")
-	.get(notes.getNote)
-	.put(notes.putNote)
-	.delete(notes.deleteNote);
+	.get(notes.getNote)									//tested
+	.put(notes.putNote)									//tested
+	.delete(notes.deleteNote);							//tested
 
 module.exports = router;
