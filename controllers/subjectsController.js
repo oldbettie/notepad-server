@@ -4,10 +4,11 @@ const Subject = db.models.Subject;
 const SubjectUser = db.models.SubjectUser;
 const session = require("./sessionController");
 
+// might need to change ---
 getAllSubjectsForUser = (req, res) => {
 	//get user from active user
 	//const ownerId = 1; //for testing purposes
-	session.getUser().then(({id}) => {
+	session.getUser().then(({ id }) => {
 		try {
 			Subject.findAll({
 				where: { ownerId },
@@ -22,8 +23,8 @@ getAllSubjectsForUser = (req, res) => {
 
 postNewSubject = (req, res) => {
 	//const ownerId = 1; //get session user id
-	session.getUser().then(({id}) => {
-	const { title } = req.body;
+	session.getUser().then(({ id }) => {
+		const { title } = req.body;
 		try {
 			Subject.create({
 				title,
@@ -43,10 +44,9 @@ getSubject = (req, res) => {
 	try {
 		Subject.findAll({
 			where: { id },
-            // include: [{ model: SubjectUser, as: 'participants',
-            // attributes: [ subjectId ] }]
-		})
-		.then((subject) => {
+			// include: [{ model: SubjectUser, as: 'participants',
+			// attributes: [ subjectId ] }]
+		}).then((subject) => {
 			res.status(200).json(subject);
 		});
 	} catch (err) {

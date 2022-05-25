@@ -1,31 +1,31 @@
 //All notes controllers
-//const db = require("../db/query");
 const { db } = require("../models");
 const Note = db.models.Note;
 const session = require("./sessionController");
 
 postNewNote = (req, res) => {
-	//get location from front-end
 	//requires elem.getBoundingClient() result from client to change location
-	const userId = 1; //get session user id
-	session.getUser().then(({id}) => {
-		const { note_text, x_axis, y_axis, subjectId } = req.body;
+	if (Auth(req).auth) {
+		const { note_text, x_axis, y_axis, subjectId, userId } = req.body;
 		try {
 			Note.create({
 				note_text,
 				x_axis,
 				y_axis,
 				subjectId,
-				userId: id,
+				userId: userId, //needs to be from req.body
 			}).then(() => {
 				res.status(200).json({ message: "note created" });
 			});
 		} catch (err) {
 			res.send({ error: err });
 		}
-	});
+	} else {
+		res.json(Auth(req.auth));
+	}
 };
 
+// dont think we need this function in final
 getNote = (req, res) => {
 	const id = req.params.id; //note_id
 	if (Auth(req).auth) {
@@ -41,20 +41,20 @@ getNote = (req, res) => {
 	}
 };
 
+// needs where: subjectID = passed in subject id
 getNotes = (req, res) => {
-	if (Auth(req).auth) {
-		try {
-			Note.findAll().then((notes) => {
-				res.status(200).json(notes);
-			});
-		} catch (err) {
-			res.send({ error: err });
-		}
+	try {
+		Note.findAll().then((notes) => {
+			res.status(200).json(notes);
+		});
+	} catch (err) {
+		res.send({ error: err });
 	}
 };
 
+// dont think we need this func in final
 getUserNotes = (req, res) => {
-	session.getUser().then(({id}) => {
+	session.getUser().then(({ id }) => {
 		try {
 			Note.findAll({
 				where: { id },
@@ -64,7 +64,7 @@ getUserNotes = (req, res) => {
 		} catch (err) {
 			res.send({ error: err });
 		}
-	})
+	});
 };
 
 putNote = (req, res) => {
@@ -100,7 +100,7 @@ deleteNote = (req, res) => {
 			res.send({ error: err });
 		}
 	}
-}; 
+};
 
 module.exports = {
 	getNotes,

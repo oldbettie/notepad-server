@@ -5,8 +5,7 @@ const sessions = require("../controllers/sessionController");
 const subjects = require("../controllers/subjectsController");
 const notes = require("../controllers/notesController");
 
-// not sure where this function needs to be
-
+// this is for the auth on the front end for setting userContext
 router.route("/isAuth").post(sessions.getUser);
 
 //users
@@ -22,7 +21,6 @@ router
 	.delete(users.deleteUser);
 
 //subject routes
-
 //route should be part of users/:?/subjects  ?
 router.get("/subjects", subjects.getAllSubjectsForUser); //tested
 
