@@ -10,42 +10,40 @@ const notes = require("../controllers/notesController");
 router.route("/isAuth").post(sessions.getUser);
 
 //users
-router.route("/login").post(sessions.createSession);
+router.route("/login").post(sessions.createSession); // tested
 
 // signup/userprofile
-router.route("/signup").post(users.registerNewUser);
+router.route("/signup").post(users.registerNewUser); // tested
 
 router
 	.route("/users/:id")
-	.get(users.getUser)
-	.put(users.putUser)
+	.get(users.getUser) // tested
+	.put(users.putUser) // tested
 	.delete(users.deleteUser);
 
 //subject routes
 
 //route should be part of users/:?/subjects  ?
-router.get("/subjects", subjects.getAllSubjectsForUser);	//tested
+router.get("/subjects", subjects.getAllSubjectsForUser); //tested
 
-router
-	.route("/subjects/new")
-	.post(subjects.postNewSubject);							//tested
+router.route("/subjects/new").post(subjects.postNewSubject); //tested
 
 router
 	.route("/subjects/:id")
-	.get(subjects.getSubject)								//tested. needs participants added
-	.put(subjects.putSubject)								//for later
-	.delete(subjects.deleteSubject);						// tested
+	.get(subjects.getSubject) //tested. needs participants added
+	.put(subjects.putSubject) //for later
+	.delete(subjects.deleteSubject); // tested
 
 //notes routes
 
-router.get("/notes", notes.getNotes);					//tested
+router.get("/notes", notes.getNotes); //tested
 
-router.route("/notes/new").post(notes.postNewNote);		//tested
+router.route("/notes/new").post(notes.postNewNote); //tested
 
 router
 	.route("/notes/:id")
-	.get(notes.getNote)									//tested
-	.put(notes.putNote)									//tested
-	.delete(notes.deleteNote);							//tested
+	.get(notes.getNote) //tested
+	.put(notes.putNote) //tested
+	.delete(notes.deleteNote); //tested
 
 module.exports = router;
