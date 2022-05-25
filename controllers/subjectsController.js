@@ -1,6 +1,7 @@
 //All subjects controllers
 const { db } = require("../models");
 const Subject = db.models.Subject;
+const SubjectUser = db.models.SubjectUser;
 
 getAllSubjectsForUser = (req, res) => {
 	//get user from active user
@@ -36,7 +37,10 @@ getSubject = (req, res) => {
 	try {
 		Subject.findAll({
 			where: { id },
-		}).then((subject) => {
+            // include: [{ model: SubjectUser, as: 'participants',
+            // attributes: [ subjectId ] }]
+		})
+		.then((subject) => {
 			res.status(200).json(subject);
 		});
 	} catch (err) {
