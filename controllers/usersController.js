@@ -21,8 +21,9 @@ registerNewUser = async (req, res) => {
 	// added working controller
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
+			console.log(req.body);
 			console.log(err);
-			return res.json({ message: err, state: false });
+			return res.json({ message: "err", state: false });
 		}
 		if (emailArray.includes(email)) {
 			return res.json({ message: "email already exists", state: false });
@@ -30,6 +31,8 @@ registerNewUser = async (req, res) => {
 			try {
 				// for sequealizer ---
 				const result = await User.create({
+					firstName: "",
+					lastName: "",
 					userName: userName,
 					email: email,
 					password: hash,
@@ -70,7 +73,21 @@ getUser = async (req, res) => {
 };
 
 putUser = (req, res) => {
-	res.send(`update user. populated user form`);
+	const data = req.body;
+	try {
+		User.update(
+			{
+				firstName: data.firstName,
+				lastName: data.lastName,
+				userName: data.userName,
+			},
+			{ where: { id: data.id } }
+		).then(() => {
+			res.status(200).json({ message: "note updated" });
+		});
+	} catch (err) {
+		res.send({ error });
+	}
 };
 
 deleteUser = (req, res) => {
