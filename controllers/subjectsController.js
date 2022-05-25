@@ -4,17 +4,21 @@ const Subject = db.models.Subject;
 const SubjectUser = db.models.SubjectUser;
 const session = require("./sessionController");
 
+// might need to change ---
 getAllSubjectsForUser = (req, res) => {
-	const ownerId = req.params.id
-	try {
-		Subject.findAll({
-			where: { ownerId },
-		}).then((subjects) => {
-			res.status(200).json(subjects);
-		});
-	} catch (err) {
-		res.send({ error: err });
-	}
+	//get user from active user
+	//const ownerId = 1; //for testing purposes
+	session.getUser().then(({ id }) => {
+		try {
+			Subject.findAll({
+				where: { ownerId: id },
+			}).then((subjects) => {
+				res.status(200).json(subjects);
+			});
+		} catch (err) {
+			res.send({ error: err });
+		}
+	});
 };
 
 postNewSubject = (req, res) => {
@@ -39,10 +43,9 @@ getSubject = (req, res) => {
 	try {
 		Subject.findAll({
 			where: { id },
-            // include: [{ model: SubjectUser, as: 'participants',
-            // attributes: [ subjectId ] }]
-		})
-		.then((subject) => {
+			// include: [{ model: SubjectUser, as: 'participants',
+			// attributes: [ subjectId ] }]
+		}).then((subject) => {
 			res.status(200).json(subject);
 		});
 	} catch (err) {
