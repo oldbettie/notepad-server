@@ -29,9 +29,9 @@ router.post("subjects/:id/new", subjects.postNewSubject); //not tested
 
 router
 	.route("/subject/:id")
-	.get(subjects.getSubject) // not tested. needs participants added
+	.get(subjects.getSubject) // tested on postman
 	.put(subjects.putSubject) //for later
-	.delete(subjects.deleteSubject); //  not tested
+	.delete(subjects.deleteSubject); // tested
 
 //notes routes
 

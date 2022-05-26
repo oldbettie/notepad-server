@@ -1,7 +1,7 @@
 //All subjects controllers
 const { db } = require("../models");
 const Subject = db.models.Subject;
-const SubjectUser = db.models.SubjectUser;
+const User = db.models.User;
 const session = require("./sessionController");
 
 // might need to change ---
@@ -43,8 +43,7 @@ getSubject = (req, res) => {
 	try {
 		Subject.findAll({
 			where: { id },
-			// include: [{ model: SubjectUser, as: 'participants',
-			// attributes: [ subjectId ] }]
+			include: [{ model: User}]
 		}).then((subject) => {
 			res.status(200).json(subject);
 		});
