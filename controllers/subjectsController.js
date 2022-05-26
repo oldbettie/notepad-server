@@ -8,17 +8,17 @@ const session = require("./sessionController");
 getAllSubjectsForUser = (req, res) => {
 	//get user from active user
 	//const ownerId = 1; //for testing purposes
-	session.getUser().then(({ id }) => {
+	const ownerId = req.params.id;
+	console.log(ownerId);
 		try {
 			Subject.findAll({
-				where: { ownerId: id },
+				where: { ownerId },
 			}).then((subjects) => {
 				res.status(200).json(subjects);
 			});
 		} catch (err) {
 			res.send({ error: err });
 		}
-	});
 };
 
 postNewSubject = (req, res) => {
