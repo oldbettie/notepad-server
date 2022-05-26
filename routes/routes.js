@@ -28,13 +28,8 @@ router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
 
 router
 	.route("/subject/:id")
-<<<<<<< HEAD
 	.get(subjects.getSubject) // tested
 	.put(subjects.putSubject) //tested
-=======
-	.get(subjects.getSubject) // tested on postman
-	.put(subjects.putSubject) //for later
->>>>>>> 8f6b2909721648731ffcb1805e6c5b5e0480f598
 	.delete(subjects.deleteSubject); // tested
 
 //notes routes

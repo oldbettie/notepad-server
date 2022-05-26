@@ -43,7 +43,6 @@ getNote = (req, res) => {
 	}
 };
 
-// needs where: subjectID = passed in subject id
 getNotes = (req, res) => {
 	try {
 		Note.findAll({
