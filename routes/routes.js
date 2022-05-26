@@ -20,29 +20,28 @@ router
 	.put(users.putUser) // tested
 	.delete(users.deleteUser);
 
-
 //subject routes
 //route should be part of users/:?/subjects  ?
-router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested on front end
+router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested
 
-router.post("subjects/:id/new", subjects.postNewSubject); //not tested
+router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
 
 router
 	.route("/subject/:id")
-	.get(subjects.getSubject) // not tested. needs participants added
-	.put(subjects.putSubject) //for later
-	.delete(subjects.deleteSubject); //  not tested
+	.get(subjects.getSubject) // tested
+	.put(subjects.putSubject) //tested
+	.delete(subjects.deleteSubject); // tested
 
 //notes routes
 
-router.get("/notes", notes.getNotes); //not tested
+router.route("/notes/:id").get(notes.getNotes); // tested
 
-router.route("/notes/new").post(notes.postNewNote); //not tested
+router.route("/notes/new").post(notes.postNewNote); // tested
 
 router
-	.route("/notes/:id")
-	.get(notes.getNote) //not tested
+	.route("/note/:id")
+	// .get(notes.getNote) //not tested
 	.put(notes.putNote) //not tested
-	.delete(notes.deleteNote); //not tested
+	.delete(notes.deleteNote); // tested
 
 module.exports = router;

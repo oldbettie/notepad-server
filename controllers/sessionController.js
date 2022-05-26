@@ -52,6 +52,8 @@ getUser = async (req, res) => {
 			firstName: result[0].firstName,
 			lastName: result[0].lastName,
 		});
+	} else {
+		Auth(req);
 	}
 };
 

@@ -1,7 +1,9 @@
 //All notes controllers
 const { db } = require("../models");
 const Note = db.models.Note;
+const User = db.models.User;
 const session = require("./sessionController");
+const Auth = require("./auth");
 
 postNewNote = (req, res) => {
 	//requires elem.getBoundingClient() result from client to change location
@@ -44,7 +46,10 @@ getNote = (req, res) => {
 // needs where: subjectID = passed in subject id
 getNotes = (req, res) => {
 	try {
-		Note.findAll().then((notes) => {
+		Note.findAll({
+			where: { subjectId: req.params.id },
+			include: [{ model: User }],
+		}).then((notes) => {
 			res.status(200).json(notes);
 		});
 	} catch (err) {
@@ -53,19 +58,19 @@ getNotes = (req, res) => {
 };
 
 // dont think we need this func in final
-getUserNotes = (req, res) => {
-	session.getUser().then(({ id }) => {
-		try {
-			Note.findAll({
-				where: { id },
-			}).then((notes) => {
-				res.status(200).json(notes);
-			});
-		} catch (err) {
-			res.send({ error: err });
-		}
-	});
-};
+// getUserNotes = (req, res) => {
+// 	session.getUser().then(({ id }) => {
+// 		try {
+// 			Note.findAll({
+// 				where: { id },
+// 			}).then((notes) => {
+// 				res.status(200).json(notes);
+// 			});
+// 		} catch (err) {
+// 			res.send({ error: err });
+// 		}
+// 	});
+// };
 
 putNote = (req, res) => {
 	//requires elem.getBoundingClient() result from client to change location
@@ -99,12 +104,14 @@ deleteNote = (req, res) => {
 		} catch (err) {
 			res.send({ error: err });
 		}
+	} else {
+		res.send(Auth(req));
 	}
 };
 
 module.exports = {
 	getNotes,
-	getUserNotes,
+	// getUserNotes,
 	postNewNote,
 	getNote,
 	putNote,
