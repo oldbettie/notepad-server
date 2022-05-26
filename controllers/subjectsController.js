@@ -1,11 +1,12 @@
 //All subjects controllers
 const { db } = require("../models");
 const Subject = db.models.Subject;
-const SubjectUser = db.models.SubjectUser;
+const User = db.models.User;
 const session = require("./sessionController");
 const Auth = require("./auth");
 
 getAllSubjectsForUser = (req, res) => {
+<<<<<<< HEAD
 	try {
 		Subject.findAll({
 			where: { ownerId: req.params.id },
@@ -15,6 +16,21 @@ getAllSubjectsForUser = (req, res) => {
 	} catch (err) {
 		res.send({ error: err, message: "failed to get subjects please check error" });
 	}
+=======
+	//get user from active user
+	//const ownerId = 1; //for testing purposes
+	const ownerId = req.params.id;
+	console.log(ownerId);
+		try {
+			Subject.findAll({
+				where: { ownerId },
+			}).then((subjects) => {
+				res.status(200).json(subjects);
+			});
+		} catch (err) {
+			res.send({ error: err });
+		}
+>>>>>>> 8f6b2909721648731ffcb1805e6c5b5e0480f598
 };
 
 postNewSubject = (req, res) => {
@@ -40,8 +56,7 @@ getSubject = (req, res) => {
 	try {
 		Subject.findAll({
 			where: { id },
-			// include: [{ model: SubjectUser, as: 'participants',
-			// attributes: [ subjectId ] }]
+			include: [{ model: User}]
 		}).then((subject) => {
 			res.status(200).json(subject);
 		});
