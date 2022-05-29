@@ -21,7 +21,7 @@ router
 	.delete(users.deleteUser);
 
 //subject routes
-//route should be part of users/:?/subjects  ?
+
 router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested
 
 router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
@@ -31,6 +31,23 @@ router
 	.get(subjects.getSubject) // tested
 	.put(subjects.putSubject) //tested
 	.delete(subjects.deleteSubject); // tested
+
+//new subject routes ------------
+router
+	.route("/subjects/all")
+	.get(subjects.getAllSubjects);	//tested
+
+router
+	.route("/subjects/addUser")
+	.post(subjects.putUserToSubject); //Tested w/ postman. no auth yet
+router
+	.route("/subjects/removeUser")
+	.post(subjects.deleteUserFromSubject); //Tested w/ postman. no auth yet
+
+router.get("/subject/users/:id", subjects.getAllSubjectUsers) //tested w/ postman
+
+// end of new routes ------------
+
 
 //notes routes
 

@@ -75,10 +75,76 @@ deleteSubject = (req, res) => {
 	}
 };
 
+//new controllers
+// gets all subjects returns with participants	tested
+getAllSubjects = (req, res) => {
+	console.log('query made')
+	try {
+		Subject.findAll({
+			include: [{ model: User }],
+		}).then((subjects) => {
+			res.status(200).json(subjects);
+		});
+	} catch (err) {
+		res.send({ error: err, message: "failed to get subjects please check error" });
+	}
+};
+
+//Adds user to subject as a participant		tested
+putUserToSubject = async (req, res) => {		
+	const [userId, subjectId] = req.body;
+	// if (Auth(req).auth) {
+		try {
+			let currentSubject = await Subject.findByPk(subjectId);
+			currentSubject.addUsers(userId)
+			res.send({ message: `added user to subject` });
+		} catch (err) {
+			res.send({ error: err });
+		}
+	// } else {
+	// 	res.send(Auth(req));
+	// }
+};
+
+// deletes user participant from subject		tested
+deleteUserFromSubject = async (req, res) => {
+	const [userId, subjectId] = req.body;
+	// if (Auth(req).auth) {
+		try {
+			let currentSubject = await Subject.findByPk(subjectId);
+			currentSubject.removeUser(userId)
+			res.send({ message: `deleted user to subject` });
+		} catch (err) {
+			res.send({ error: err });
+		}
+	// } else {
+	// 	res.send(Auth(req));
+	// }
+}
+
+// gets subject users for subjectId = :?		tested
+getAllSubjectUsers = async (req, res) => {
+	const subjectId = req.params.id;
+	console.log(subjectId);
+	try {
+		let currentSubject = await Subject.findByPk(subjectId);
+		let subUsers = await currentSubject.getUsers();
+		res.send(subUsers);
+	} catch (err) {
+		res.send({ error: err });
+	}
+}
+
+
+
 module.exports = {
 	getAllSubjectsForUser,
 	postNewSubject,
 	getSubject,
 	putSubject,
 	deleteSubject,
+	getAllSubjects,
+	putUserToSubject, 
+	deleteUserFromSubject,
+	getAllSubjectUsers
 };
