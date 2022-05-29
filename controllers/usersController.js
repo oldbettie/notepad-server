@@ -37,6 +37,7 @@ registerNewUser = async (req, res) => {
 					userName: userName,
 					email: email,
 					password: hash,
+					color: "#ffff88",
 				});
 				res.json({
 					userName: userName,
@@ -82,6 +83,7 @@ putUser = (req, res) => {
 					firstName: data.firstName,
 					lastName: data.lastName,
 					userName: data.userName,
+					color: data.color,
 				},
 				{ where: { id: data.id } }
 			).then(() => {

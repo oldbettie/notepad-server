@@ -2,7 +2,6 @@
 const { db } = require("../models");
 const Note = db.models.Note;
 const User = db.models.User;
-const session = require("./sessionController");
 const Auth = require("./auth");
 
 postNewNote = (req, res) => {
@@ -15,7 +14,8 @@ postNewNote = (req, res) => {
 				x_axis,
 				y_axis,
 				subjectId,
-				userId: userId, //needs to be from req.body
+				userId: userId,
+				color: req.body.color,
 			}).then(() => {
 				res.status(200).json({ message: "note created" });
 			});
@@ -55,21 +55,6 @@ getNotes = (req, res) => {
 		res.send({ error: err });
 	}
 };
-
-// dont think we need this func in final
-// getUserNotes = (req, res) => {
-// 	session.getUser().then(({ id }) => {
-// 		try {
-// 			Note.findAll({
-// 				where: { id },
-// 			}).then((notes) => {
-// 				res.status(200).json(notes);
-// 			});
-// 		} catch (err) {
-// 			res.send({ error: err });
-// 		}
-// 	});
-// };
 
 putNote = (req, res) => {
 	//requires elem.getBoundingClient() result from client to change location
