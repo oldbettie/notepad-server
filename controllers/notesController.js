@@ -78,7 +78,7 @@ deleteNote = (req, res) => {
 module.exports = {
 	getNotes,
 	postNewNote,
-	getNote,
+
 	putNote,
 	deleteNote,
 };
