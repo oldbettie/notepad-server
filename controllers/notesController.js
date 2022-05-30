@@ -5,7 +5,6 @@ const User = db.models.User;
 const Auth = require("./auth");
 
 postNewNote = (req, res) => {
-	//requires elem.getBoundingClient() result from client to change location
 	if (Auth(req).auth) {
 		const { note_text, x_axis, y_axis, subjectId, userId } = req.body;
 		try {
@@ -27,22 +26,6 @@ postNewNote = (req, res) => {
 	}
 };
 
-// dont think we need this function in final
-getNote = (req, res) => {
-	const id = req.params.id; //note_id
-	if (Auth(req).auth) {
-		try {
-			Note.findAll({
-				where: { id },
-			}).then((note) => {
-				res.status(200).json(note);
-			});
-		} catch (err) {
-			res.send({ error: err });
-		}
-	}
-};
-
 getNotes = (req, res) => {
 	try {
 		Note.findAll({
@@ -57,7 +40,6 @@ getNotes = (req, res) => {
 };
 
 putNote = (req, res) => {
-	//requires elem.getBoundingClient() result from client to change location
 	if (Auth(req).auth) {
 		const id = req.params.id;
 		const { note_text, x_axis, y_axis } = req.body;
@@ -95,7 +77,6 @@ deleteNote = (req, res) => {
 
 module.exports = {
 	getNotes,
-	// getUserNotes,
 	postNewNote,
 	getNote,
 	putNote,

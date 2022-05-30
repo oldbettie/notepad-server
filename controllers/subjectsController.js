@@ -2,7 +2,6 @@
 const { db } = require("../models");
 const Subject = db.models.Subject;
 const User = db.models.User;
-const session = require("./sessionController");
 const Auth = require("./auth");
 
 getAllSubjectsForUser = (req, res) => {
@@ -78,7 +77,7 @@ deleteSubject = (req, res) => {
 //new controllers
 // gets all subjects returns with participants	tested
 getAllSubjects = (req, res) => {
-	console.log('query made')
+	console.log("query made");
 	try {
 		Subject.findAll({
 			include: [{ model: User }],
@@ -91,36 +90,36 @@ getAllSubjects = (req, res) => {
 };
 
 //Adds user to subject as a participant		tested
-putUserToSubject = async (req, res) => {		
+putUserToSubject = async (req, res) => {
 	const [userId, subjectId] = req.body;
-	// if (Auth(req).auth) {
+	if (Auth(req).auth) {
 		try {
 			let currentSubject = await Subject.findByPk(subjectId);
-			currentSubject.addUsers(userId)
+			currentSubject.addUsers(userId);
 			res.send({ message: `added user to subject` });
 		} catch (err) {
 			res.send({ error: err });
 		}
-	// } else {
-	// 	res.send(Auth(req));
-	// }
+	} else {
+		res.send(Auth(req));
+	}
 };
 
 // deletes user participant from subject		tested
 deleteUserFromSubject = async (req, res) => {
 	const [userId, subjectId] = req.body;
-	// if (Auth(req).auth) {
+	if (Auth(req).auth) {
 		try {
 			let currentSubject = await Subject.findByPk(subjectId);
-			currentSubject.removeUser(userId)
+			currentSubject.removeUser(userId);
 			res.send({ message: `deleted user to subject` });
 		} catch (err) {
 			res.send({ error: err });
 		}
-	// } else {
-	// 	res.send(Auth(req));
-	// }
-}
+	} else {
+		res.send(Auth(req));
+	}
+};
 
 // gets subject users for subjectId = :?		tested
 getAllSubjectUsers = async (req, res) => {
@@ -133,9 +132,7 @@ getAllSubjectUsers = async (req, res) => {
 	} catch (err) {
 		res.send({ error: err });
 	}
-}
-
-
+};
 
 module.exports = {
 	getAllSubjectsForUser,
@@ -144,7 +141,7 @@ module.exports = {
 	putSubject,
 	deleteSubject,
 	getAllSubjects,
-	putUserToSubject, 
+	putUserToSubject,
 	deleteUserFromSubject,
-	getAllSubjectUsers
+	getAllSubjectUsers,
 };
