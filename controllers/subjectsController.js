@@ -2,7 +2,6 @@
 const { db } = require("../models");
 const Subject = db.models.Subject;
 const User = db.models.User;
-const session = require("./sessionController");
 const Auth = require("./auth");
 
 getAllSubjectsForUser = (req, res) => {
@@ -78,7 +77,7 @@ deleteSubject = (req, res) => {
 //new controllers
 // gets all subjects returns with participants	tested
 getAllSubjects = (req, res) => {
-	console.log('query made')
+	console.log("query made");
 	try {
 		Subject.findAll({
 			include: [{ model: User }],
@@ -125,9 +124,7 @@ getAllSubjectUsers = async (req, res) => {
 	} catch (err) {
 		res.send({ error: err });
 	}
-}
-
-
+};
 
 module.exports = {
 	getAllSubjectsForUser,
@@ -136,7 +133,7 @@ module.exports = {
 	putSubject,
 	deleteSubject,
 	getAllSubjects,
-	putUserToSubject, 
+	putUserToSubject,
 	deleteUserFromSubject,
-	getAllSubjectUsers
+	getAllSubjectUsers,
 };

@@ -43,18 +43,19 @@ getUser = async (req, res) => {
 	const id = req.body.id;
 	if (Auth(req).auth) {
 		const result = await User.findAll({ where: { id: id } });
-
-		res.json({
-			...Auth(req),
-			email: result[0].email,
-			userName: result[0].userName,
-			id: result[0].id,
-			firstName: result[0].firstName,
-			lastName: result[0].lastName,
-			color: result[0].color,
-		});
+		if (result) {
+			res.json({
+				...Auth(req),
+				email: result[0].email,
+				userName: result[0].userName,
+				id: result[0].id,
+				firstName: result[0].firstName,
+				lastName: result[0].lastName,
+				color: result[0].color,
+			});
+		}
 	} else {
-		Auth(req);
+		res.send(Auth(req));
 	}
 };
 
