@@ -10,8 +10,6 @@ registerNewUser = async (req, res) => {
 	const userName = req.body.userName;
 	const email = req.body.email;
 	const password = req.body.password;
-	console.log(email);
-	// sequeliser ----
 	const allUsers = await User.findAll();
 	const emailArray = [];
 	if (allUsers.length > 0) {
@@ -22,8 +20,6 @@ registerNewUser = async (req, res) => {
 	// added working controller
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
-			console.log(req.body);
-			console.log(err);
 			return res.json({ message: "err", state: false });
 		}
 		if (emailArray.includes(email)) {
