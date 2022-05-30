@@ -21,21 +21,11 @@ router
 	.delete(users.deleteUser);
 
 //subject routes
-
-router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested
-
-router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
-
-router
-	.route("/subject/:id")
-	.get(subjects.getSubject) // tested
-	.put(subjects.putSubject) //tested
-	.delete(subjects.deleteSubject); // tested
-
-//new subject routes ------------
 router
 	.route("/subjects/all")
 	.get(subjects.getAllSubjects);	//tested
+//new subject routes ------------
+
 
 router
 	.route("/subjects/addUser")
@@ -47,6 +37,18 @@ router
 router.get("/subject/users/:id", subjects.getAllSubjectUsers) //tested w/ postman
 
 // end of new routes ------------
+
+router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested
+
+router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
+
+router
+	.route("/subject/:id")
+	.get(subjects.getSubject) // tested
+	.put(subjects.putSubject) //tested
+	.delete(subjects.deleteSubject); // tested
+
+
 
 
 //notes routes

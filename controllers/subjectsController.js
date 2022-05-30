@@ -91,35 +91,27 @@ getAllSubjects = (req, res) => {
 };
 
 //Adds user to subject as a participant		tested
-putUserToSubject = async (req, res) => {		
-	const [userId, subjectId] = req.body;
-	// if (Auth(req).auth) {
-		try {
-			let currentSubject = await Subject.findByPk(subjectId);
-			currentSubject.addUsers(userId)
-			res.send({ message: `added user to subject` });
-		} catch (err) {
-			res.send({ error: err });
-		}
-	// } else {
-	// 	res.send(Auth(req));
-	// }
+putUserToSubject = async (req, res) => {	
+	try {
+		let currentSubject = await Subject.findByPk(req.body.subjectId);
+		console.log(currentSubject, 'check');
+		currentSubject.addUsers(req.body.userId)
+		res.send({ message: `added user to subject` });
+	} catch (err) {
+		res.send({ error: err });
+	}
 };
 
 // deletes user participant from subject		tested
 deleteUserFromSubject = async (req, res) => {
-	const [userId, subjectId] = req.body;
-	// if (Auth(req).auth) {
-		try {
-			let currentSubject = await Subject.findByPk(subjectId);
-			currentSubject.removeUser(userId)
-			res.send({ message: `deleted user to subject` });
-		} catch (err) {
-			res.send({ error: err });
-		}
-	// } else {
-	// 	res.send(Auth(req));
-	// }
+	const {userId, subjectId} = req.body;
+	try {
+		let currentSubject = await Subject.findByPk(subjectId);
+		currentSubject.removeUser(userId)
+		res.send({ message: `deleted user to subject` });
+	} catch (err) {
+		res.send({ error: err });
+	}
 }
 
 // gets subject users for subjectId = :?		tested
