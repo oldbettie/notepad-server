@@ -5,7 +5,7 @@ const User = db.models.User;
 const Auth = require("./auth");
 
 //All user Controllers
-
+// checks if email is already in db if not then registers the new user.
 registerNewUser = async (req, res) => {
 	const userName = req.body.userName;
 	const email = req.body.email;
@@ -17,7 +17,6 @@ registerNewUser = async (req, res) => {
 			emailArray.push(user.email);
 		});
 	}
-	// added working controller
 	bcrypt.hash(password, saltRounds, async (err, hash) => {
 		if (err) {
 			return res.json({ message: "err", state: false });
@@ -41,29 +40,23 @@ registerNewUser = async (req, res) => {
 					message: "sucess",
 					state: true,
 				});
-				console.log(result);
 			} catch (err) {
 				res.json({ message: err, state: false });
-				console.log(err);
 			}
 		}
 	});
-	//redirect to user profile ------
 };
 
 getUser = async (req, res) => {
 	try {
-		// for sequaliser ----
 		const data = await User.findAll({
 			where: { id: req.params.id },
 		});
 
 		if (!data) {
-			console.log(data);
 			throw new Error(data, "data error");
 		} else {
 			res.json(data);
-			console.log(data);
 		}
 	} catch (err) {
 		res.send({ error: err });
@@ -95,7 +88,6 @@ putUser = (req, res) => {
 
 deleteUser = (req, res) => {
 	res.send(`delete user with id`);
-	//redirect to landing?;
 };
 
 module.exports = {

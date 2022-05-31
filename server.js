@@ -6,7 +6,6 @@ const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const dotenv = require("dotenv").config();
 
-// check for caps after git pull
 const PORT = process.env.PORT || 3000;
 const app = express();
 
@@ -23,7 +22,6 @@ app.use(
 	})
 );
 
-// need to update these settings before it will work
 app.use(
 	session({
 		key: "userId",
@@ -35,7 +33,8 @@ app.use(
 		},
 	})
 );
-// auto invoked callback function..
+
+// auto invoked callback function.. this inits the db
 (async () => {
 	await db.sequelize.sync();
 })();
@@ -43,13 +42,8 @@ app.use(
 //load routes
 app.use(routes);
 
-app.get("/", (req, res) => {
-	res.send("Hello World");
-});
-
 app.use((req, res) => {
 	res.status(404).send({ url: `${req.originalURL} not found!` });
 });
 
 app.listen(PORT);
-console.log(`server running on http://localhost:${PORT}`);

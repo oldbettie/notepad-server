@@ -8,12 +8,13 @@ const notes = require("../controllers/notesController");
 // this is for the auth on the front end for setting userContext
 router.route("/isAuth").post(sessions.getUser);
 
-//users
+// login
 router.route("/login").post(sessions.createSession); // tested
 
-// signup/userprofile
+// signup
 router.route("/signup").post(users.registerNewUser); // tested
 
+// user
 router
 	.route("/users/:id")
 	.get(users.getUser) // tested
@@ -21,46 +22,34 @@ router
 	.delete(users.deleteUser);
 
 //subject routes
-router
-	.route("/subjects/all")
-	.get(subjects.getAllSubjects);	//tested
+router.route("/subjects/all").get(subjects.getAllSubjects); //tested
+
 //new subject routes ------------
+router.route("/subjects/addUser").post(subjects.putUserToSubject); //Tested ---
+router.route("/subjects/removeUser").post(subjects.deleteUserFromSubject); //Tested ---
 
-
-router
-	.route("/subjects/addUser")
-	.post(subjects.putUserToSubject); //Tested w/ postman. no auth yet
-router
-	.route("/subjects/removeUser")
-	.post(subjects.deleteUserFromSubject); //Tested w/ postman. no auth yet
-
-router.get("/subject/users/:id", subjects.getAllSubjectUsers) //tested w/ postman
+router.get("/subject/users/:id", subjects.getAllSubjectUsers); //tested ---
 
 // end of new routes ------------
 
+// subjects the user owns
 router.get("/subjects/:id", subjects.getAllSubjectsForUser); //tested
-
 router.post("/subjects/:id/new", subjects.postNewSubject); // testsed
 
+// single subject
 router
 	.route("/subject/:id")
 	.get(subjects.getSubject) // tested
 	.put(subjects.putSubject) //tested
 	.delete(subjects.deleteSubject); // tested
 
-
-
-
 //notes routes
-
 router.route("/notes/:id").get(notes.getNotes); // tested
-
 router.route("/notes/new").post(notes.postNewNote); // tested
 
 router
 	.route("/note/:id")
-	// .get(notes.getNote) //not tested
-	.put(notes.putNote) //not tested
+	.put(notes.putNote) // tested
 	.delete(notes.deleteNote); // tested
 
 module.exports = router;
